@@ -10,7 +10,6 @@ const Header = () => {
   const isHome = location.pathname === "/";
 
   const [isScrolled, setIsScrolled] = useState(false);
-  const [activeMenu, setActiveMenu] = useState(null); // 초기 상태를 null로 설정
 
   useEffect(() => {
     const handleScroll = () => {
@@ -23,16 +22,7 @@ const Header = () => {
     };
   }, []);
 
-  useEffect(() => {
-    // 메인 페이지로 이동할 때 activeMenu 초기화
-    if (isHome) {
-      setActiveMenu(null);
-    }
-  }, [isHome]);
-
   const handleMenuClick = (menu) => {
-    setActiveMenu(menu);
-    // 필요한 경우 각 메뉴에 맞는 페이지로 이동
     if (menu === "영화") navigate("/movies");
     if (menu === "예능") navigate("/entertainment");
     if (menu === "드라마") navigate("/dramas");
@@ -56,7 +46,6 @@ const Header = () => {
           {["영화", "예능", "드라마", "키즈/애니"].map((menu) => (
             <li
               key={menu}
-              className={activeMenu === menu ? "active" : ""}
               onClick={() => handleMenuClick(menu)}
             >
               {menu}
@@ -74,7 +63,7 @@ const Header = () => {
         />
         <WeatherWidget />
       </div>
-      {isHome && !isScrolled && <div className="gradient-banner"></div>} {/* 그라데이션 영역 */}
+      {!isScrolled && <div className="gradient-banner"></div>}
     </header>
   );
 };
